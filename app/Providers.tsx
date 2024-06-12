@@ -18,21 +18,9 @@ const config: FusionAuthProviderConfig = {
     console.log(`Redirect happened with state value: ${state}`);
   },
   scope: "openid email profile offline_access",
+  nextCookieAdapter: useCookies,
 };
 
 export default function Providers({ children }: PropsWithChildren) {
-  const cookies = useCookies();
-
-  const cookieAdapter = {
-    at_exp() {
-      return cookies.get("app.at_exp");
-    },
-  };
-
-  const c = {
-    ...config,
-    cookieAdapter,
-  };
-
-  return <FusionAuthProvider {...c}>{children}</FusionAuthProvider>;
+  return <FusionAuthProvider {...config}>{children}</FusionAuthProvider>;
 }
